@@ -1,6 +1,6 @@
 import React from 'react'
-import { useLDClient } from 'launchdarkly-react-client-sdk';
-import { LdProxy } from './shared/LaunchDarklyProxy';
+import { LDClientProxy } from './shared/LaunchDarklyProxy';
+import config from './config';
 
 const AddUserToDashboard = () => {
 
@@ -30,10 +30,17 @@ const AddUserToDashboard = () => {
         }
     };
 
-    const ldClient = useLDClient();
-    const ldProxy = new LdProxy(ldClient, userInfo);
-    ldProxy.addUserToDashboard();
+    /*
+    const ldcFactory = new LdClientProxyFactory(config.launchDarklyClientId, userInfo);
+    ldcFactory.createClient().then(ldcClient => {
+        const usr = ldcClient.getUser();
+        console.log(usr);
+    });
+    */
 
+    const ldc = new LDClientProxy(config.launchDarklyClientId, userInfo);
+    ldc.getUser().then(usr => console.log(usr));
+    ldc.getAllFlags().then(flags => console.log(flags));
     
     /*
     ldClient.identify(userId)

@@ -4,10 +4,11 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { asyncWithLDProvider } from 'launchdarkly-react-client-sdk';
+import config from './config'; 
 
 (async () => {
     const LDProvider = await asyncWithLDProvider({
-        clientSideID: '5e59491b5ffa0909a383a3dd'
+        clientSideID: config.launchDarklyClientId
     });
 
     ReactDOM.render(<LDProvider><App /></LDProvider>, document.getElementById('root'));

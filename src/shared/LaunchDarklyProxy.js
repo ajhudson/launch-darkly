@@ -1,20 +1,30 @@
-function LdProxy(ldClient, user) {
-    this.ldClient = ldClient;
+const LDClient = require('launchdarkly-js-client-sdk');
+
+function LDClientProxy(ldClientSideId, user) {
+    this.ldClientSideId = ldClientSideId;
     this.user = user;
+    this.ldClient = null;
 
-    console.log(this.ldClient);
+    const initClient = () => new Promise(resolve => {
+       if (this.ldClient != null) {
+           resolve(this.ldClient);
+       } else {
+        this.ldClient = LDClient.initialize(this.ldClientSideId, this.user);
+        this.ldClient.on('ready', () => { 
+            resolve(this.ldClient);
+        });    
+       }
+    }); 
 
-    const addUserToDashboard = () => {
-        console.log('added user');
-        console.log(this.user);
-        this.ldClient.identify(this.user)
-            .then(() => console.log('sent to launch darkly'))
-            .catch(() => console.log('there was an error'));
-    }
+
+    const getUser = () => new Promise(resolve => initClient().then(ldc => resolve(ldc.getUser())));
+
+    const getAllFlags = () => new Promise(resolve => initClient().then(ldc => resolve(ldc.allFlags())));
 
     return {
-        addUserToDashboard: addUserToDashboard
-    };
-}
+        getUser: getUser,
+        getAllFlags: getAllFlags
+    }
+};
 
-exports.LdProxy = LdProxy;
+exports.LDClientProxy = LDClientProxy;
