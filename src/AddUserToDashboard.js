@@ -4,15 +4,9 @@ import { LdProxy } from './shared/LaunchDarklyProxy';
 
 const AddUserToDashboard = () => {
 
-    const ldClient = useLDClient();
     const now = new Date();
-    const ldProxy = new LdProxy({ id: 'abcd'});
-    ldProxy.addUser();
-
-    //console.log(LaunchDarklyProxy);
-
-    const userId = {
-        key: 1001,
+    const userInfo = {
+        key: 2001,
         firstName: 'Andy',
         lastName: 'Hudson',
         email: 'andyhudson1979@gmail.com',
@@ -36,13 +30,20 @@ const AddUserToDashboard = () => {
         }
     };
 
+    const ldClient = useLDClient();
+    const ldProxy = new LdProxy(ldClient, userInfo);
+    ldProxy.addUserToDashboard();
+
+    
+    /*
     ldClient.identify(userId)
             .then(x => console.log(x));
 
+    */
     return(
         <div id='add-user-to-dashboard'>
-            <p>{ userId.firstName } { userId.lastName }</p>
-            <p>{ userId.custom.lastLoginUtc }</p>
+            <p>{ userInfo.firstName } { userInfo.lastName }</p>
+            <p>{ userInfo.custom.lastLoginUtc }</p>
             <p>{ new Date().getTime() }</p>
         </div>
     );
