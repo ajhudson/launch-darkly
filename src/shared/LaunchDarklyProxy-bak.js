@@ -16,8 +16,8 @@ function LaunchDarklyUserInfoFactory(sourceUserInfo) {
                 lastLoginHourUtc: now.getUTCHours(),
                 lastLoginMinutesUtc: now.getUTCMinutes(),
                 lastLoginSecondsUtc: now.getUTCSeconds(),
-                arbitaryGroups: [
-                    `group ${group}`
+                arbitaryGroup: [
+                    group
                 ]
             }
         };

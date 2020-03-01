@@ -1,35 +1,9 @@
-import React from 'react'
-import { LDClientProxy } from '../shared/LaunchDarklyProxy';
-import config from '../config';
+import React, { useEffect } from 'react'
+import { useLDClient } from 'launchdarkly-react-client-sdk';
+import { LaunchDarklyUserInfoFactory } from './../shared/LaunchDarklyUserInfoFactory';
+import { LaunchDarklyClientProxy } from './../shared/LaunchDarklyClientProxy';
 
 const AddUserToDashboard = () => {
-
-    /*()
-    const now = new Date();
-    const userInfo = {
-        key: 2001,
-        firstName: 'Andy',
-        lastName: 'Hudson',
-        email: 'andyhudson1979@gmail.com',
-        anonymous: false,
-        custom: {
-            postcode: 'PR7 5AQ',
-            lastLoginDateUtc: now.getUTCDate(),
-            lastLoginMonthUtc: now.getUTCMonth(),
-            lastLoginYearUtc: now.getUTCFullYear(),
-            lastLoginHourUtc: now.getUTCHours(),
-            lastLoginMinutesUtc: now.getUTCMinutes(),
-            lastLoginSecondsUtc: now.getUTCSeconds(),
-            groups: [
-                "tote uk",
-                "tote uk 2",
-                { a: 1, b: 2 }
-            ],
-            arbitaryGroups: [
-                "group 1"
-            ]
-        }
-    };*/
 
     const userInfo = {
         key: 2001,
@@ -39,10 +13,20 @@ const AddUserToDashboard = () => {
         anonymous: false,
     };
 
-    const ldc = new LDClientProxy(config.launchDarklyClientId, userInfo);  
-    ldc.registerUserOnDashboard().then(usr => console.log(usr));
-    ldc.getAllFlags().then(flags => console.log(flags));
-    
+    const ldClient = useLDClient();
+    const ldUserInfoFactory = new LaunchDarklyUserInfoFactory();
+    const ldClientProxy = new LaunchDarklyClientProxy(ldClient, ldUserInfoFactory, userInfo);
+
+    const registerAndReturnUser = async () => {
+        const usr = await ldClientProxy.addUserToDashboard();
+        console.log('the user return from the async op is...');
+        console.log(usr);
+    };
+
+    useEffect(() => {
+        registerAndReturnUser();
+    }, [])
+
     return(
         <div id='add-user-to-dashboard'>
             <p>{ userInfo.firstName } { userInfo.lastName }</p>
