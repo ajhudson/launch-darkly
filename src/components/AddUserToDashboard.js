@@ -5,6 +5,8 @@ import { LaunchDarklyClientProxy } from './../shared/LaunchDarklyClientProxy';
 
 const AddUserToDashboard = () => {
 
+    const ldClient = useLDClient();
+
     const userInfo = {
         key: 2001,
         firstName: 'Andy',
@@ -13,24 +15,21 @@ const AddUserToDashboard = () => {
         anonymous: false,
     };
 
-    const ldClient = useLDClient();
-    const ldUserInfoFactory = new LaunchDarklyUserInfoFactory();
-    const ldClientProxy = new LaunchDarklyClientProxy(ldClient, ldUserInfoFactory, userInfo);
-
-    const registerAndReturnUser = async () => {
-        const usr = await ldClientProxy.addUserToDashboard();
-        console.log('the user return from the async op is...');
-        console.log(usr);
-    };
-
     useEffect(() => {
+        const ldUserInfoFactory = new LaunchDarklyUserInfoFactory();
+        const ldClientProxy = new LaunchDarklyClientProxy(ldClient, ldUserInfoFactory, userInfo);
+
+        const registerAndReturnUser = async () => {
+            const usr = await ldClientProxy.addUserToDashboard();
+            console.log('the user return from the async op is...');
+            console.log(usr);
+        };
+
         registerAndReturnUser();
-    }, [])
+    }, [ldClient, userInfo])
 
     return(
-        <div id='add-user-to-dashboard'>
-            <p>{ userInfo.firstName } { userInfo.lastName }</p>
-        </div>
+        <></>
     );
 }
 
