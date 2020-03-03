@@ -1,25 +1,9 @@
-/*
-const LaunchDarklyFlagsUtils = {
-    getSiteMaintenanceFlags: getLDFlagsFn => {
-        const { fullSiteMaintenance, partialSiteMaintenance } = getLDFlagsFn();
-
-        return {
-            isFullSiteOn: fullSiteMaintenance === true,
-            isPartialSiteOn: partialSiteMaintenance === true,
-            isAnyOn: fullSiteMaintenance === true || partialSiteMaintenance === true,
-            isAllOn: fullSiteMaintenance === true && partialSiteMaintenance === true
-        };
-    }
-};
-
-export default LaunchDarklyFlagsUtils;
-*/
-
 function LaunchDarklyFlagsUtils(getLDFlagsFn) {
     this.getLDFlagsFn = getLDFlagsFn;
 
     const getSiteMaintenanceFlags = () => {
         const allFlags = this.getLDFlagsFn();
+        /*
         let target = {}
         const x = Object.keys(allFlags)
                         .filter(k => k.endsWith('SiteMaintenance'))
@@ -28,8 +12,9 @@ function LaunchDarklyFlagsUtils(getLDFlagsFn) {
         console.log('ALL FLAGS');
         console.log(x);
         console.log('');
+        */
         
-        const  { fullSiteMaintenance, partialSiteMaintenance } = this.getLDFlagsFn();
+        const  { fullSiteMaintenance, partialSiteMaintenance } = allFlags;
 
         const allValues = [fullSiteMaintenance, partialSiteMaintenance];
 

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useLDClient } from 'launchdarkly-react-client-sdk';
-import { LaunchDarklyUserInfoFactory } from './../shared/LaunchDarklyUserInfoFactory';
-import { LaunchDarklyClientProxy } from './../shared/LaunchDarklyClientProxy';
+import { LaunchDarklyUserInfoFactory } from '../../shared/LaunchDarklyUserInfoFactory';
+import { LaunchDarklyClientProxy } from '../../shared/LaunchDarklyClientProxy';
 
 const AddUserToDashboard = () => {
 
@@ -21,8 +21,8 @@ const AddUserToDashboard = () => {
 
         const registerAndReturnUser = async () => {
             const usr = await ldClientProxy.addUserToDashboard();
-            console.log('the user return from the async op is...');
-            console.log(usr);
+            //console.log('the user return from the async op is...');
+            //console.log(usr);
         };
 
         registerAndReturnUser();
