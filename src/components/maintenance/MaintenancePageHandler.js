@@ -3,8 +3,8 @@ import { useFlags } from 'launchdarkly-react-client-sdk';
 import MaintenancePage from './MaintenancePage';
 
 const MaintenancePageHandler = ({children}) => {
-    const { maintenancePage } = useFlags();
-    const toRender = maintenancePage ? <MaintenancePage /> : children;
+    const { fullSiteMaintenance } = useFlags();
+    const toRender = fullSiteMaintenance ? <MaintenancePage /> : children;
 
     return (
         <>{ toRender }</>
